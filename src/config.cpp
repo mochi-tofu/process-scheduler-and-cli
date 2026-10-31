@@ -115,18 +115,59 @@ bool Config::load(const std::string& path, std::string& error){
         
     }
 
-    if (numCpu < 1 || numCpu > 128) {
-        error += "num-cpu must be between 1 and 128\n";
-        isValid = false;
+    //range limit checks
+    if (isValid) {
+
+        if (numCpu < 1 || numCpu > 128) {
+            error += "num-cpu must be between 1 and 128 (inclusive) or key is missing\n";
+            isValid = false;
+        }
+
+        if (scheduler != "fcfs" && scheduler != "rr" ){
+            error += "scheduler must either be \"rr\" or \"fcfs\" \n";
+            isValid = false;
+        }
+
+        if (quantumCycles < 1 || quantumCycles > 4294967296) {
+            error += "quantum-cycles must be between 1 and 4294967296 (inclusive) or key is missing\n";
+            isValid = false;
+        }
+
+        if (batchProcessFreq < 1 || batchProcessFreq > 4294967296) {
+            error += "batch-process-freq must be between 1 and 4294967296 (inclusive) or key is missing\n";
+            isValid = false;
+        }
+
+        if (minIns < 1 || minIns > 4294967296) {
+            error += "min-ins must be between 1 and 4294967296 (inclusive) or key is missing\n";
+            isValid = false;
+        }
+
+        if (maxIns < 1 || maxIns > 4294967296) {
+            error += "max-ins must be between 1 and 4294967296 (inclusive) or key is missing\n";
+            isValid = false;
+        }
+
+        //no need to check below 0, because uint64_t can never be negative
+        if (delayPerExec > 4294967296) {
+            error += "delay-per-exec must be between 0 and 4294967296 (inclusive) or key is missing\n";
+            isValid = false;
+        }
+
+        if (minIns > maxIns){
+            error += "min-ins must be less than or equal to max-ins\n";
+            isValid = false;
+        }
+
+        /*
+        //for checking if data was stored in Config struct
+        std::cout << numCpu << " " << scheduler << " " << quantumCycles << " "
+            << batchProcessFreq << " " << minIns << " " << maxIns << " "
+            << delayPerExec << "\n";
+        */
+
     }
 
     return isValid;
 
-    std::cout << numCpu << " " << scheduler << " " << quantumCycles << " "
-          << batchProcessFreq << " " << minIns << " " << maxIns << " "
-          << delayPerExec << "\n";
-
-
-
-    return true;
 }

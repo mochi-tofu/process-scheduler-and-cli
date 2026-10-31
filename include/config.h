@@ -3,13 +3,13 @@
 #include <cstdint>
 
 struct Config{
-    int numCpu; 
-    std::string scheduler;
-    uint64_t quantumCycles;
-    uint64_t batchProcessFreq;
-    uint64_t minIns;
-    uint64_t maxIns;
-    uint64_t delayPerExec;
+    int numCpu = 0; 
+    std::string scheduler = "";
+    uint64_t quantumCycles = 0;
+    uint64_t batchProcessFreq = 0;
+    uint64_t minIns = 0;
+    uint64_t maxIns = 0;
+    uint64_t delayPerExec = UINT64_MAX;
 
     bool load(const std::string& path, std::string& error);
 };
