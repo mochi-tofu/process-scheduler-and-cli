@@ -5,8 +5,6 @@
 #include <iostream>
 #include <sstream>
 
-//to do: error checking for range limits, and checking whether rr or fcfs
-
 static bool isPosi(const std::string& value) {
     return value.find_first_not_of("0123456789") == std::string::npos;
 }
