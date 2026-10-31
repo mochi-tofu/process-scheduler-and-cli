@@ -1,11 +1,15 @@
 #include "console.h"
 #include <iostream>
+//#include "utils.h"
 
 int main() {
 
     Console console;
 
+    
     console.run();
+
+    //std::cout << getTimestamp() << "\n";
 
     /*
     Config cfg;
