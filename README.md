@@ -15,12 +15,12 @@ process scheduler/
 │   └── Utils.h               # Timestamp (MM/DD/YYYY HH:MM:SSAM) and string helpers
 ├── src/                  # Source files (Implementation logic)
 │   ├── Config.cpp
-│   ├── Instruction.cpp       # execute(Process&) for each instruction type
 │   ├── Process.cpp
 │   ├── ProcessGenerator.cpp
 │   ├── CPUCore.cpp
 │   ├── Scheduler.cpp
 │   ├── Console.cpp
+│   ├── Utils.cpp
 │   └── main.cpp              # Entry file
 ├── config.txt            # Input configuration file
 ├── Makefile              # Optional: build with one command
