@@ -1,4 +1,4 @@
-#pragma once
+#pragma once  //make sure only included once
 #include <string>
 #include <cstdint>
 
