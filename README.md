@@ -2,7 +2,8 @@
 
 Guide lng but feel free to change anything
 
-csopesy-emulator/
+```text
+process scheduler/
 ├── include/              # Header files (Class declarations)
 │   ├── Config.h              # Holds the parsed config.txt values
 │   ├── Instruction.h         # PRINT, DECLARE, ADD, SUBTRACT, SLEEP (no FOR)
@@ -24,3 +25,4 @@ csopesy-emulator/
 ├── config.txt            # Input configuration file
 ├── Makefile              # Optional: build with one command
 └── README.txt            # Name, build/run instructions, entry file
+```
