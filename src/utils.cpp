@@ -1,7 +1,7 @@
 #include <ctime>
 #include "utils.h"
 
-std::string getTimestamp(){
+std::string getTimeNow(){
     char buffer[32];
 
     //current time in seconds

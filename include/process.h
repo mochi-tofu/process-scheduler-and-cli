@@ -21,6 +21,8 @@ class Process{
         std::string timestamp;
         int coreID = -1;  //no assigned core by default
 
+        uint16_t resolve(const Operand& op);
+
     public:
 
         Process(const std::string& name, uint64_t id);

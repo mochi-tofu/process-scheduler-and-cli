@@ -10,7 +10,20 @@ void Console::run(){
     while (true){
 
         std::cout << "root:\\> ";
-        std::getline(std::cin, command);
+        
+        if (!std::getline(std::cin, command)) {
+            break;          // exit loop when no more input, same as "exit"
+                            //if input is from file/piped or user inputs Ctrl+Z then Enter (for Windows)
+        }
+
+        //trim whitespaces in front
+        command.erase(0, command.find_first_not_of(" \t\r\n")); 
+        //trim whitespaces at the end
+        command.erase(command.find_last_not_of(" \t\r\n") + 1);
+        
+        if (command.empty()) {
+            continue;       // skip the rest of this iteration
+        }
 
         if (command == "exit"){ 
             break;
