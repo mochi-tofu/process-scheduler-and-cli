@@ -1,5 +1,6 @@
 CXX      = g++
-CXXFLAGS = -std=c++17 -Wall -Wextra -Iinclude
+# -iquote (not -I): our include/process.h would otherwise shadow the Windows system <process.h>
+CXXFLAGS = -std=c++17 -Wall -Wextra -iquote include
 
 HEADERS  = $(wildcard include/*.h)
 SRC      = $(wildcard src/*.cpp)

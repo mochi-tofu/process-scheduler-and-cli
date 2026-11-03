@@ -27,6 +27,7 @@ void Process::setCoreID(int id) { coreID = id; }
 //others
 void Process::addInstruction(const Instruction& instruction) { instruction_list.push_back(instruction); }
 bool Process::isFinished() const{ return state == State::FINISHED; }
+bool Process::isSleeping() const{ return state == State::SLEEPING; }
 
 //set operand to be given value or retrieve from variable list
 uint16_t Process::resolve(const Operand& op){
@@ -71,7 +72,9 @@ void Process::executeNext(){
 
         case InstructionType::SLEEP:{
             sleep_ticks = ins.value;
-            state = State::SLEEPING;
+
+            if (ins.value)  //only changes state if sleep ticks value is above 0
+                state = State::SLEEPING;
             break;
         }
 
@@ -87,3 +90,11 @@ void Process::executeNext(){
 
 }
 
+void Process::decrementSleep(){
+    if (sleep_ticks > 0) //sleep_ticks is uint16_t, so can't be negative
+        sleep_ticks--;
+}
+
+bool Process::hasInsLeft() const{
+    return current_line < instruction_list.size();
+}

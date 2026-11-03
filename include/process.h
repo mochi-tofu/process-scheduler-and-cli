@@ -43,8 +43,12 @@ class Process{
         void setState(State s);
         void setCoreID(int id);
 
+        //others
         void addInstruction(const Instruction& instruction);
         void executeNext();
         bool isFinished() const;
+        bool isSleeping() const;
+        void decrementSleep();
+        bool hasInsLeft() const;
 
 };
