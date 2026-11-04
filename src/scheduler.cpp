@@ -1,5 +1,7 @@
 #include "scheduler.h"
 
+constexpr int TICK_MS = 1; //acts like a normal variable unlike define
+
 Scheduler::Scheduler (const Config& con): config(con){
     //create number of cores stated in config
     for (int i = 0; i < config.numCpu; i++){
@@ -8,6 +10,8 @@ Scheduler::Scheduler (const Config& con): config(con){
 }
 
 void Scheduler::addProcess(std::shared_ptr<Process> p){
+    
+    std::lock_guard<std::mutex> lock(mtx);
     allProcesses.push_back(p);
     readyQueue.push_back(p);
 }
@@ -78,5 +82,41 @@ void Scheduler::tick(){
     cpuTicks++;
 }
 
-uint64_t Scheduler::getTicks() const { return cpuTicks; }
-const std::vector<std::shared_ptr<Process>>& Scheduler::getAllProcesses() const { return allProcesses; }
+uint64_t Scheduler::getTicks() const { 
+    std::lock_guard<std::mutex> lock(mtx);
+    return cpuTicks; }
+
+std::vector<std::shared_ptr<Process>> Scheduler::getAllProcesses() const { 
+    std::lock_guard<std::mutex> lock(mtx);
+    return allProcesses; }
+
+void Scheduler::start(){
+    if (running){
+        return;
+    }
+    
+    running = true;
+    worker = std::thread(&Scheduler::loop, this); //1st param - points to loop function of a Scheduler
+}
+    
+void Scheduler::loop(){
+
+    while (running){
+
+        {
+            std::lock_guard<std::mutex> lock(mtx);
+            tick();
+        }
+
+        std::this_thread::sleep_for(std::chrono::milliseconds(TICK_MS));
+    }
+}
+
+void Scheduler::stop(){
+    running = false;
+    if (worker.joinable()) //checks if there's an existing thread for worker
+        worker.join(); //console thread waits for worker thread to finish b4 continuing
+}
+      
+//always join worker thread first b4 destroying Scheduler object
+Scheduler::~Scheduler(){ stop(); }
