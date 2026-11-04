@@ -39,6 +39,10 @@ Reason: the project's `include/process.h` has the same name as a Windows system 
 system headers (used by threads) can accidentally load the project's file instead and fail to compile.
 `-iquote` only applies to `#include "..."`, so system headers still get the real one.
 
+## Claude generated codes
+
+See [docs/claude-generated-code.md](docs/claude-generated-code.md) for the files and parts of files written by Claude.
+
 ## File structure
 
 Guide lng but feel free to change anything
