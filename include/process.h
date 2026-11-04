@@ -20,6 +20,7 @@ class Process{
         uint16_t sleep_ticks = 0;
         std::string timestamp;
         int coreID = -1;  //no assigned core by default
+        uint64_t delay_left = 0;
 
         uint16_t resolve(const Operand& op);
 
@@ -38,10 +39,12 @@ class Process{
         uint16_t getSleepTicks() const;
         std::string getCreationTime() const;
         int getCoreID() const;
+        uint64_t getDelayLeft () const;
 
         //setters
         void setState(State s);
         void setCoreID(int id);
+        void setDelayLeft (uint64_t d);
 
         //others
         void addInstruction(const Instruction& instruction);
@@ -50,5 +53,7 @@ class Process{
         bool isSleeping() const;
         void decrementSleep();
         bool hasInsLeft() const;
+        void decrementDelay();
+
 
 };

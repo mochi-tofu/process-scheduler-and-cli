@@ -19,6 +19,7 @@ void CPUCore::assign (std::shared_ptr<Process> p){
     current = p;
     p->setCoreID(id);
     p->setState(State::RUNNING);
+    ticksUsed = 0; //reset quantum-cycles
 } 
 
 //remove process from core
@@ -33,9 +34,24 @@ std::shared_ptr<Process> CPUCore::release(){
     return temp;
 } 
 
-void CPUCore::tick(){
+void CPUCore::tick(uint64_t delayPerExec){
+
     if (current){
-        current->executeNext();
+
+        if (current->getDelayLeft() > 0){
+            current->decrementDelay();
+        }
+
+        else {
+            current->executeNext();
+            if (current->getState() == State::RUNNING){
+                current->setDelayLeft(delayPerExec);
+            }
+        }
+
+        ticksUsed++;
     }
 }
+
+uint64_t CPUCore::getTicksUsed() const{ return ticksUsed; }
     

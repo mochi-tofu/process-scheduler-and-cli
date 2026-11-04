@@ -24,7 +24,7 @@ void Scheduler::tick(){
 
     //run each core
     for (CPUCore& core : cores){
-        core.tick();
+        core.tick(config.delayPerExec);
     }
 
     //store new updated list of sleeping processes
@@ -55,11 +55,23 @@ void Scheduler::tick(){
 
     //release finished/sleeping processes from cores
     for (CPUCore& core : cores){
-        if (!core.isIdle() && (core.getProcess()->isFinished() || core.getProcess()->isSleeping())){
-            std::shared_ptr<Process> p = core.release();
+        if (core.isIdle()){ //if no prrocess skip to next core
+            continue;     
+        }
 
-            if (p->isSleeping())
-                sleepList.push_back(p);
+        if (core.getProcess()->isFinished()){
+            std::shared_ptr<Process> p = core.release();
+        }
+
+        else if (core.getProcess()->isSleeping()){
+            std::shared_ptr<Process> p = core.release();
+            sleepList.push_back(p);
+        }
+
+        else if (config.scheduler == "rr" && core.getTicksUsed() >= config.quantumCycles){
+           std::shared_ptr<Process> p = core.release();
+            p->setState(State::READY);
+            readyQueue.push_back(p);
         }
     }
 

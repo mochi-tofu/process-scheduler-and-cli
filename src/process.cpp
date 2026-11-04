@@ -19,10 +19,12 @@ State Process::getState() const { return state; }
 uint16_t Process::getSleepTicks() const { return sleep_ticks; }
 std::string Process::getCreationTime() const { return timestamp; }
 int Process::getCoreID() const { return coreID; }
+uint64_t Process::getDelayLeft () const { return delay_left; }
 
 //setters
 void Process::setState(State s){ state = s; }
 void Process::setCoreID(int id) { coreID = id; }
+void Process::setDelayLeft (uint64_t d) { delay_left = d; }
 
 //others
 void Process::addInstruction(const Instruction& instruction) { instruction_list.push_back(instruction); }
@@ -97,4 +99,9 @@ void Process::decrementSleep(){
 
 bool Process::hasInsLeft() const{
     return current_line < instruction_list.size();
+}
+
+void Process::decrementDelay(){
+    if (delay_left > 0) //delay_left is uint16_t, so can't be negative
+        delay_left--;
 }
