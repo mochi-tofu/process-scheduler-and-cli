@@ -2,7 +2,7 @@
 
 ## Requirements
 
-- **g++ with C++17 and thread support.** We use MSYS2 UCRT64 GCC (16.2). Check with `g++ --version`.
+- **g++ with C++17 and thread support.** Tested with MSYS2 UCRT64 GCC (16.2). Check with `g++ --version`.
   The old MinGW.org GCC 6.3 does **not** work (no `std::thread`, no `std::clamp`).
   - Install MSYS2, then in the "MSYS2 UCRT64" terminal: `pacman -S mingw-w64-ucrt-x86_64-gcc`
   - Add `<msys2 folder>\ucrt64\bin` to your PATH (and remove any old `C:\MinGW\bin`)
@@ -35,8 +35,8 @@ If you compile by hand, use `-iquote include`, **not** `-Iinclude`:
 g++ -std=c++17 -Wall -Wextra -iquote include src/*.cpp -o main
 ```
 
-Reason: our `include/process.h` has the same name as a Windows system header. With `-Iinclude`,
-system headers (used by threads) can accidentally load our file instead and fail to compile.
+Reason: the project's `include/process.h` has the same name as a Windows system header. With `-Iinclude`,
+system headers (used by threads) can accidentally load the project's file instead and fail to compile.
 `-iquote` only applies to `#include "..."`, so system headers still get the real one.
 
 ## File structure
