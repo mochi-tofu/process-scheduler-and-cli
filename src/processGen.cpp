@@ -6,8 +6,6 @@ static const std::vector<std::string> VAR_NAMES = {"x", "y", "z", "a", "b"};
 
 ProcessGenerator::ProcessGenerator(const Config& con): config(con), rng(std::random_device{}()) {}
 
-ProcessGenerator::ProcessGenerator(const Config& con, uint64_t seed): config(con), rng(seed) {}
-
 uint64_t ProcessGenerator::randBetween(uint64_t lo, uint64_t hi){
     std::uniform_int_distribution<uint64_t> dist(lo, hi);
     return dist(rng);

@@ -24,7 +24,6 @@ class ProcessGenerator {
         static constexpr uint64_t MAX_BODY = 5;   //max instructions directly inside one FOR body (before expansion)
 
         explicit ProcessGenerator(const Config& con);  //random seed, different every run
-        ProcessGenerator(const Config& con, uint64_t seed); //fixed seed, same output every run (for tests)
 
         //makes a process with a random instruction list, length between min-ins and max-ins (after FOR expansion)
         std::shared_ptr<Process> generate(const std::string& name, uint64_t id);
