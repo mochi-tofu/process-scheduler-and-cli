@@ -71,21 +71,23 @@ void Scheduler::tick(){
         }
 
         if (core.getProcess()->isFinished()){
-            std::shared_ptr<Process> p = core.release();
+            core.release();
         }
-
-        else if (core.getProcess()->isSleeping()){
-            std::shared_ptr<Process> p = core.release();
-            sleepList.push_back(p);
-        }
-
         else if (config.scheduler == "rr" && core.getTicksUsed() >= config.quantumCycles){
            std::shared_ptr<Process> p = core.release();
             p->setState(State::READY);
             readyQueue.push_back(p);
         }
     }
-
+    
+     // Re-fill cores immediately after release
+    for (CPUCore& core : cores) {
+        if (core.isIdle() && !readyQueue.empty()) {
+            core.assign(readyQueue.front());
+            readyQueue.pop_front();
+        }
+    }
+    
     cpuTicks++;
 
     //scheduler-start: a new process every batch-process-freq ticks, at the END of the tick
