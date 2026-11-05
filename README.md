@@ -2,10 +2,10 @@
 
 ## Group members
 
-- Chua, Myka Nadine
-- Lim, Julienne Skye
-- Ong, Eiress Bassey
-- Xu, Kai Wen
+- Chua, Myka Nadine R.
+- Lim, Julienne Skye L.
+- Ong, Eiress Bassey H.
+- Xu, Kai Wen H.
 
 ## Entry file
 
