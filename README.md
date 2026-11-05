@@ -2,8 +2,7 @@
 
 ## Requirements
 
-- **g++ with C++17 and thread support.** Tested with MSYS2 UCRT64 GCC (16.2). Check with `g++ --version`.
-  The old MinGW.org GCC 6.3 does **not** work (no `std::thread`, no `std::clamp`).
+- **g++ with C++17 and thread support.**
   - Install MSYS2, then in the "MSYS2 UCRT64" terminal: `pacman -S mingw-w64-ucrt-x86_64-gcc`
   - Add `<msys2 folder>\ucrt64\bin` to your PATH (and remove any old `C:\MinGW\bin`)
 - **mingw32-make**, which comes with the MSYS2 GCC above.
