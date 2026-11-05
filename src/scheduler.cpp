@@ -73,6 +73,12 @@ void Scheduler::tick(){
         if (core.getProcess()->isFinished()){
             core.release();
         }
+
+        else if (core.getProcess()->isSleeping()){
+            std::shared_ptr<Process> p = core.release();
+            sleepList.push_back(p);
+        }
+            
         else if (config.scheduler == "rr" && core.getTicksUsed() >= config.quantumCycles){
            std::shared_ptr<Process> p = core.release();
             p->setState(State::READY);
